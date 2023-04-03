@@ -1,9 +1,13 @@
 import { Sequelize } from 'sequelize'
+import config from '../../config'
 // About the change that was mention on db/models/parkingSlots, first you need to import all models
 // import * as from allModels '../db/models'
 
-const sequelize = new Sequelize('parco', 'postgres', 'postgres', {
-  host: 'db',
+const sequelize = new Sequelize({
+  database: config.POSTGRES_DB,
+  username: config.POSTGRES_USER,
+  password: config.POSTGRES_PASSWORD,
+  host: config.POSTGRES_HOST || 'db',
   dialect: 'postgres',
   port: 5432,
   logging: false
@@ -17,9 +21,9 @@ const sequelize = new Sequelize('parco', 'postgres', 'postgres', {
 //   host: 'db',
 //   dialect: 'postgres',
 //   port: 5432,
-//   username: 'postgres',
-//   password: 'postgres',
-//   database: 'parco',
+//   database: config.POSTGRES_DB,
+//   username: config.POSTGRES_USER,
+//   password: config.POSTGRES_PASSWORD
 //   logging: false,
 //   // models: Object.values(AllModels),
 // })

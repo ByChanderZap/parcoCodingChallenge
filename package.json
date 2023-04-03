@@ -5,6 +5,8 @@
 	"main": "main.ts",
 	"scripts": {
 		"dev": "nodemon --config nodemon.json src/main.ts",
+		"dev-w-db": "docker-compose up -d db && nodemon --config nodemon.json src/main.ts",
+		"dockerize": "docker-compose build dev && docker-compose up",
 		"start": "node dist/main.js",
 		"build": "tsc -p tsconfig.build.json",
 		"husky": "npm run format && npm run lint",
