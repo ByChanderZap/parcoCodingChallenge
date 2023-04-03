@@ -1,2 +1,2 @@
-export * from './create.schema'
+export * from './data.schemas'
 export * from './query.schema'

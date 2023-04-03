@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from 'express'
 import * as service from './service'
-import { Parking } from '../../types'
+import { iParking, iUpdateParkingData } from '../../types'
 
 
 export const getAllParkings = async (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log(req.query)
     const data = await service.getAllParkings(req.query)
-    res.send({
+    res.json({
       totalItems: data.length,
       data
     })
@@ -18,12 +18,32 @@ export const getAllParkings = async (req: Request, res: Response, next: NextFunc
 
 export const createNewParkign = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const parkignToCreate: Parking = {
+    const parkignToCreate: iParking = {
       ...req.body
     }
 
     const newParking = await service.createNewParkign(parkignToCreate)
-    res.send(newParking)
+    res.json({
+      create: 'success',
+      parking: newParking
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const updateParking = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req.params.id as string
+    const newData: iUpdateParkingData = {
+      ...req.body
+    }
+
+    const parkingUpdated = await service.updateParking(id, newData)
+    res.json({
+      update: 'success',
+      parking: parkingUpdated
+    })
   } catch (error) {
     next(error)
   }

@@ -1,8 +1,8 @@
 import joi from 'joi'
-import { Parking } from '../../../../types'
+import { iParking } from '../../../../types'
 import { ParkingType } from '../../../../enums'
 
-const parkingExample: Parking = {
+const parkingExample: iParking = {
   id: 1,
   name: '',
   spots: 1,

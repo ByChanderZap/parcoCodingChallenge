@@ -11,7 +11,12 @@ const parkingTypeSchema = joi.string().valid(...Object.values(ParkingType)).requ
 
 export const parkingCreateSchema = {
   name: nameSchema.required(),
-  spots: spotsSchema.required(),
+  spots: spotsSchema.min(50).max(1500).required(),
   contact: contactSchema.required(),
   parkingType: parkingTypeSchema.required()
+}
+
+export const parkingUpdateSchema = {
+  spots: spotsSchema.min(50).max(1500).optional(),
+  contact: contactSchema.optional()
 }

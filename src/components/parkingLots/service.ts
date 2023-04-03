@@ -1,5 +1,5 @@
-import { insertNewParking, queryParkings } from './queries'
-import { Parking } from '../../types'
+import { createNewParking, queryParkings, updateParkingDb } from './queries'
+import { iParking, iUpdateParkingData } from '../../types'
 import Boom from '@hapi/boom'
 
 export const getAllParkings = async (query) => {
@@ -11,14 +11,23 @@ export const getAllParkings = async (query) => {
   return await queryParkings(queryOptions)
 }
 
-export const createNewParkign = async (parkingData: Parking) => {
-  if (parkingData.spots < 50 || parkingData.spots > 1500) throw Boom.badRequest('Spots must be between 50 and 1500')
-  
+export const createNewParkign = async (parkingData: iParking) => {
   try {
-    const parkingCreated = await insertNewParking(parkingData)
+    const parkingCreated = await createNewParking(parkingData)
     return parkingCreated
   } catch (error) {
-    if(error.name === 'SequelizeUniqueConstraintError') throw Boom.badData('Name must be unique')
+    if(error.name === 'SequelizeUniqueConstraintError') throw Boom.badRequest('Name must be unique')
     throw Boom.internal('Something went wrong with the server')
+  }
+}
+
+export const updateParking = async (id: string, parkingToUpdate: iUpdateParkingData) => {
+  try {
+    const [affectedCount, [updatedParking]] = await updateParkingDb(id, parkingToUpdate)
+    if (affectedCount < 1) throw Boom.badData('Parking not found')
+    return updatedParking.dataValues
+  } catch (error) {
+    if(error.name === 'SequelizeUniqueConstraintError') throw Boom.badRequest('Name must be unique')
+    throw error
   }
 }

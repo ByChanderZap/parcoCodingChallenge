@@ -1,11 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Column, DataType, Model, Table } from 'sequelize-typescript'
-import { iParking, iParkingCreation } from '../../../types'
-import { ParkingType } from '../../../enums'
+import { iUpdateUserData, iUser } from '../../../types'
+import { UserType } from '../../../enums'
 import db from '../db'
 
+// export const User = db.define<Model<iParking, iParkingCreation>>('User', {
 
-export const Parking = db.define<Model<iParking, iParkingCreation>>('Parking', {
+export const User = db.define<Model<iUser, iUpdateUserData>>('User', {
   // Model attributes are defined here
   id: {
     type: DataType.UUID,
@@ -15,18 +16,22 @@ export const Parking = db.define<Model<iParking, iParkingCreation>>('Parking', {
   name: {
     type: DataType.STRING,
     allowNull: false,
+  },
+  username: {
+    type: DataType.STRING,
+    allowNull: false,
     unique: true
   },
-  spots: {
-    type: DataType.INTEGER,
-    allowNull: false
+  password: {
+    type: DataType.STRING,
+    allowNull: false,
   },
   contact: {
     type: DataType.STRING,
     allowNull: false,
   },
-  parkingType: {
-    type: DataType.ENUM(...Object.values(ParkingType)),
+  userType: {
+    type: DataType.ENUM(...Object.values(UserType)),
     allowNull: false,
   }
 }, {
