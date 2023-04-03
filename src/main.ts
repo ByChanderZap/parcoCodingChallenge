@@ -1,13 +1,12 @@
 import express, { Express } from 'express'
 import * as ParcoRoutes from './main.routes'
 import { connectToDatabase } from './utils/db/db'
+import config from './config'
 
 const api: Express = express()
 
 const HOST = 'localhost'
-const PORT = process.env.PORT || 3000
-
-
+const PORT = config.PORT || 3000
 //  Server configuration
 api.use(express.json())
 api.use(express.urlencoded({ extended: true }))
@@ -20,7 +19,7 @@ api.use('/', ParcoRoutes.routes());
   try {
     await connectToDatabase()
   } catch (error) {
-    console.error('An error occurred while connecting to the database:', error)
+    console.error('An error occurred while connecting to the database', error)
   }
 })()
 

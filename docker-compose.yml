@@ -24,10 +24,8 @@ services:
     restart: always
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=parco
+    env_file:
+      - .env
     networks:
       - parco-network
   pgadmin:
