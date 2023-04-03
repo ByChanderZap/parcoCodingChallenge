@@ -6,9 +6,15 @@ import db from '../db'
 
 export const Parking = db.define('Parking', {
   // Model attributes are defined here
+  id: {
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    primaryKey: true,
+  },
   name: {
     type: DataType.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   spots: {
     type: DataType.INTEGER,

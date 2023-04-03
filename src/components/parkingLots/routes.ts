@@ -2,12 +2,14 @@ import { Router } from 'express'
 import {
   createNewParkign,
   getAllParkings,
-  getOneParking
 } from './controller'
+import {
+  validationHandler
+} from '../../utils/middlewares'
+import { parkingCreateSchema, querySchema } from '../../utils/validations/schemas'
 
 export function routes(api: Router) {
-  api.get('/parkings', getAllParkings)
-  api.get('/parkings/:id', getOneParking)
-  api.post('/parkings', createNewParkign)
+  api.get('/parkings', validationHandler(querySchema, 'query'), getAllParkings)
+  api.post('/parkings', validationHandler(parkingCreateSchema), createNewParkign)
   return api
 }
