@@ -2,7 +2,7 @@ import express, { Express } from 'express'
 import * as ParcoRoutes from './main.routes'
 import { connectToDatabase } from './utils/db/db'
 import config from './config'
-import { errorHandler, logErrors, wrapError } from './utils/middlewares'
+import { errorHandler, logErrors, notFoundHandler, wrapError } from './utils/middlewares'
 
 const api: Express = express()
 
@@ -28,5 +28,6 @@ api.use('/', ParcoRoutes.routes());
 api.use(logErrors)
 api.use(wrapError)
 api.use(errorHandler)
+api.use(notFoundHandler)
 
 api.listen(PORT, () => console.log(`API running ${HOST}:${PORT}`))

@@ -5,7 +5,6 @@ import { iParking, iUpdateParkingData } from '../../types'
 
 export const getAllParkings = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.query)
     const data = await service.getAllParkings(req.query)
     res.json({
       totalItems: data.length,

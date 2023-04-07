@@ -15,6 +15,7 @@ const getConfig = (): ENV => {
     POSTGRES_USER: process.env.POSTGRES_USER,
     POSTGRES_HOST: process.env.POSTGRES_HOST,
     POSTGRES_PORT: process.env.POSTGRES_PORT,
+    JWT_SECRET: process.env.JWT_SECRET || 'secret'
   }
 }
 

@@ -1,1 +1,1 @@
-export const allowedUndefinedKeys = ['PORT']
+export const allowedUndefinedKeys = ['PORT', 'JWT_SECRET']

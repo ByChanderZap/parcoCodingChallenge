@@ -17,7 +17,7 @@ export const createNewParkign = async (parkingData: iParking) => {
     return parkingCreated
   } catch (error) {
     if(error.name === 'SequelizeUniqueConstraintError') throw Boom.badRequest('Name must be unique')
-    throw Boom.internal('Something went wrong with the server')
+    throw error
   }
 }
 
