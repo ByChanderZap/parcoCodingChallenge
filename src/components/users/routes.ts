@@ -5,7 +5,6 @@ import {
 } from './controller'
 import {
   validationHandler,
-  verifyToken
 } from '../../utils/middlewares'
 import { loginSchema, userCreateSchema } from '../../utils/validations/schemas'
 

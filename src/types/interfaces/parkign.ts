@@ -6,6 +6,8 @@ export interface iParking {
   spots: number
   contact: string
   parkingType: ParkingType
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export interface iUpdateParkingData {

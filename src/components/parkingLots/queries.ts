@@ -1,8 +1,8 @@
 import { Parking } from '../../utils/db/models'
 import { iParking, iUpdateParkingData } from '../../types'
+import { FindOptions } from 'sequelize/types'
 
-
-export const queryParkings = (query) => {
+export const queryParkings = (query: FindOptions) => {
   return Parking.findAll(query)
 }
 
