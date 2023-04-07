@@ -1,6 +1,7 @@
+import { Request, Response } from 'express'
 import boom from '@hapi/boom'
 
-const notFoundHandler = (req, res) => {
+export const notFoundHandler = (req: Request, res: Response) => {
   const {
     output: { statusCode, payload }
   } = boom.notFound()
@@ -8,4 +9,3 @@ const notFoundHandler = (req, res) => {
   res.status(statusCode).json(payload)
 }
 
-export default notFoundHandler

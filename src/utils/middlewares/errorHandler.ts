@@ -1,3 +1,4 @@
+import { NextFunction, Request, Response } from 'express'
 import config from '../../config'
 import boom from '@hapi/boom'
 
@@ -8,12 +9,12 @@ const withErrorStack = (err, stack) => {
   return err
 }
 
-export const logErrors = (err, req, res, next) => {
+export const logErrors = (err, req: Request, res: Response, next: NextFunction) => {
   console.error(err)
   next(err)
 }
 
-export const wrapError = (err, req, res, next) => {
+export const wrapError = (err, req: Request, res: Response, next: NextFunction) => {
   if(!err.isBoom){
     next(boom.badImplementation(err))
   }
@@ -21,7 +22,7 @@ export const wrapError = (err, req, res, next) => {
   next(err)
 }
 
-export const errorHandler = (err, req, res, next) => {   //eslint-disable-line
+export const errorHandler = (err, req: Request, res: Response, next: NextFunction) => {   //eslint-disable-line
   const { output: { statusCode, payload } } = err
 
   res.status(statusCode)

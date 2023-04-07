@@ -6,6 +6,7 @@ export interface ENV {
   POSTGRES_DB: string | undefined;
   POSTGRES_HOST: string | undefined;
   POSTGRES_PORT: string | undefined;
+  JWT_SECRET: string | undefined;
 }
 
 export interface Config {
@@ -16,4 +17,5 @@ export interface Config {
   POSTGRES_DB: string;
   POSTGRES_HOST: string;
   POSTGRES_PORT: string;
+  JWT_SECRET: string;
 }

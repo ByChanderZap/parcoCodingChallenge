@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize'
+import { Sequelize } from 'sequelize-typescript'
 import config from '../../config'
 // About the change that was mention on db/models/parkingSlots, first you need to import all models
 // import * as from allModels '../db/models'
