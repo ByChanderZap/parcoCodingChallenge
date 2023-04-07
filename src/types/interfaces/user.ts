@@ -39,8 +39,18 @@ export interface AuthenticatedRequest extends Request {
   user: {
     id: string;
     userType: string;
-  };
+  }
+
+  body: {
+    parkingId: string
+  }
 }
+
+export interface iJwtPayload {
+  id: string;
+  userType: string;
+}
+
 export interface SignInRequest extends Request {
   body: {
     username: string

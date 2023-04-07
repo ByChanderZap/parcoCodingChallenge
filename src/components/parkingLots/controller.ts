@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import * as service from './service'
-import { iParking, iUpdateParkingData } from '../../types'
+import { AuthenticatedRequest, iParking, iUpdateParkingData } from '../../types'
 
 
 export const getAllParkings = async (req: Request, res: Response, next: NextFunction) => {
@@ -42,6 +42,18 @@ export const updateParking = async (req: Request, res: Response, next: NextFunct
     res.json({
       update: 'success',
       parking: parkingUpdated
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const checkIn = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  try {
+    await service.checkIn(req.user, req.body.parkingId)
+    res.status(200).json({
+      success: true,
+      message: 'User allowed to enter'
     })
   } catch (error) {
     next(error)

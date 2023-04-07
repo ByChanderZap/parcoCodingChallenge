@@ -1,5 +1,5 @@
 export enum UserType {
-  PUBLIC = 'corporate',
-  PRIVATE = 'provider',
-  COURTESY = 'visitor'
+  CORPORATE = 'corporate',
+  PROVIDER = 'provider',
+  VISITOR = 'visitor'
 }

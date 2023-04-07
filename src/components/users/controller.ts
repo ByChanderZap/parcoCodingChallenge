@@ -26,9 +26,3 @@ export const signIn = async (req: SignInRequest, res: Response, next: NextFuncti
     next(error)
   }
 }
-
-// export const signedInd = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-//   console.log('a')
-//   console.log(req.user)
-//   res.send('aaa')
-// }
