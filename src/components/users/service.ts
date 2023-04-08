@@ -27,7 +27,7 @@ export const getAllUsers = async () => {
   return allUsers
 }
 
-export const signIn = async (user: iSignIn) => {
+export const authenticateUser = async (user: iSignIn) => {
   const [userExists] = await queryUser({ where: { username: user.username } })
   const userValues = userExists.get({ plain: true })
   if (!userValues) throw Boom.badData('Invalid username or password')
