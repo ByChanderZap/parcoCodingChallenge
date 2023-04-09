@@ -1,12 +1,17 @@
-import { createNewUser } from '../service'
-import { insertUser } from '../queries'
+import { authenticateUser, createNewUser } from '../service'
+import { insertUser, queryUser } from '../queries'
 import { UniqueConstraintError } from 'sequelize'
-import { mockUser } from '../__mocks__/user.data.mocks'
+import { mockAuthBody, mockJwt, mockUser } from '../__mocks__/user.data.mocks'
 import bcrypt from 'bcrypt'
+import generateToken from '../../../utils/createJwt'
+import Boom from '@hapi/boom'
+
 
 jest.mock('../queries', () => ({
-  insertUser: jest.fn()
+  insertUser: jest.fn(),
+  queryUser: jest.fn()
 }))
+jest.mock('../../../utils/createJwt')
 beforeEach(() => {
   jest.clearAllMocks()
 })
@@ -65,5 +70,67 @@ describe('createNewUser', () => {
       }))
       expect(err).toEqual(error)
     }
+  })
+})
+
+
+describe('authenticateUser', () => {
+  it('should throw an error if the password did not match', async () => {
+    (queryUser as jest.Mock).mockResolvedValue([
+      {
+        get: () => ({
+          id: 1,
+          username: mockAuthBody.username,
+          password: 'somerandompass', 
+        }),
+      },
+    ])
+  
+    await expect(authenticateUser(mockAuthBody)).rejects.toThrow('Invalid username or password')
+  
+    expect(queryUser).toHaveBeenCalledWith({
+      where: { username: mockAuthBody.username },
+    })
+  })
+
+  it('should authenticate a user with valid credentials', async () => {
+    // Mock the queryUser function to return a user with the correct username and password
+    const mockUser = {
+      id: 1,
+      username: 'johndoe',
+      password: 'somerandompassowrd',
+      get: () => ({
+        id: 1,
+        username: mockAuthBody.username,
+        password: 'somerandompass', 
+      })
+    };
+    (queryUser as jest.Mock).mockResolvedValue([mockUser])
+    ;(generateToken as jest.Mock).mockResolvedValue(mockJwt)
+
+  
+    const bcryptCompare = jest.fn().mockResolvedValue(true);
+    (bcrypt.compare as jest.Mock) = bcryptCompare
+    // Call the authenticateUser function with a valid username and password
+    const token = await authenticateUser(mockAuthBody)
+  
+    // Ensure the function returns a JWT token
+    expect(typeof token).toBe('string')
+    expect(token.length).toBeGreaterThan(0)
+    expect(token).toBe(mockJwt)
+  
+    // Ensure the queryUser function was called with the correct parameters
+    expect(queryUser).toHaveBeenCalledWith({
+      where: { username: mockAuthBody.username },
+    })
+  })
+  it('should throw an error if the user does not exist', async () => {
+    (queryUser as jest.Mock).mockResolvedValue([])
+    
+    await expect(authenticateUser(mockAuthBody)).rejects.toThrow('Invalid username or password')
+    
+    expect(queryUser).toHaveBeenCalledWith({
+      where: { username: mockAuthBody.username },
+    })
   })
 })
