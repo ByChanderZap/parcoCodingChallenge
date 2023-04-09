@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { authenticateUser, createNewUser } from '../service'
 import { insertUser, queryUser } from '../queries'
 import { UniqueConstraintError } from 'sequelize'
