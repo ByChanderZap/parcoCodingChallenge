@@ -48,7 +48,7 @@ export interface AuthenticatedRequest extends Request {
 
 export interface iJwtPayload {
   id: string;
-  userType: string;
+  userType: UserType;
 }
 
 export interface SignInRequest extends Request {

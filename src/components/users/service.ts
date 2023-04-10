@@ -22,15 +22,16 @@ export const createNewUser = async (userData: iUser) => {
   }
 }
 
+// not needed
 export const getAllUsers = async () => {
   const allUsers = await queryUser({})
   return allUsers
 }
 
-export const signIn = async (user: iSignIn) => {
+export const authenticateUser = async (user: iSignIn) => {
   const [userExists] = await queryUser({ where: { username: user.username } })
+  if (!userExists) throw Boom.badData('Invalid username or password')
   const userValues = userExists.get({ plain: true })
-  if (!userValues) throw Boom.badData('Invalid username or password')
   const passwordIsValid = await bcrypt.compare(user.password, userValues.password)
   if (!passwordIsValid) throw Boom.badData('Invalid username or password')
   const token = generateToken(userValues)

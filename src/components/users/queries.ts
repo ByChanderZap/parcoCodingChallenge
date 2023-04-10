@@ -9,6 +9,7 @@ export const insertUser = (userData: iUser) => {
   })
 }
 
+// not needed
 export const queryUser = (query) => {
   return User.findAll(query)
 }
